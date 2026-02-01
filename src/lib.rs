@@ -31,7 +31,7 @@ impl MacroError for syn::Error {
 
 #[macro_export]
 macro_rules! wrap {
-    ($impl_name:path[$($item:expr),* $(,)?]) => {
+    ($impl_name:path: $($item:expr),* $(,)?) => {
         ::std::convert::Into::into(
             $impl_name($(::std::convert::Into::into($item),)*)
                 .unwrap_or_else($crate::MacroError::into_compiler_error),
