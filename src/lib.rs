@@ -15,7 +15,7 @@ pub mod prelude {
 
     pub use proc_macro2::TokenStream;
 
-    pub use crate::wrap;
+    pub use crate::macros;
 }
 
 pub trait MacroError {
@@ -37,4 +37,27 @@ macro_rules! wrap {
                 .unwrap_or_else($crate::MacroError::into_compiler_error),
         )
     };
+}
+
+#[macro_export]
+macro_rules! r#macro {
+    (fn $name:ident => $inner:path) => {
+        #[proc_macro]
+        pub fn $name(item: ::proc_macro::TokenStream) -> ::proc_macro::TokenStream {
+            $crate::wrap!($inner: item)
+        }
+    };
+    (attr $name:ident => $inner:path) => {
+        #[proc_macro]
+        pub fn $name(args: ::proc_macro::TokenStream, item: ::proc_macro::TokenStream) -> ::proc_macro::TokenStream {
+            $crate::wrap!($inner: args, item)
+        }
+    };
+}
+
+#[macro_export]
+macro_rules! macros {
+    ($($kind:tt $name:ident => $inner:path;)*) => {$(
+        $crate::r#macro!{$kind $name => $inner}
+    )*};
 }
