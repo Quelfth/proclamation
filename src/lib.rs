@@ -13,7 +13,7 @@ pub mod prelude {
     #[cfg(feature = "quote")]
     pub use quote::{format_ident, quote, quote_spanned};
 
-    pub use proc_macro2::TokenStream;
+    pub use proc_macro2::{Span, TokenStream};
 
     pub use crate::macros;
 }
