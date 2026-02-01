@@ -48,7 +48,7 @@ macro_rules! r#macro {
         }
     };
     (attr $name:ident => $inner:path) => {
-        #[proc_macro]
+        #[proc_macro_attribute]
         pub fn $name(args: ::proc_macro::TokenStream, item: ::proc_macro::TokenStream) -> ::proc_macro::TokenStream {
             $crate::wrap!($inner: args, item)
         }
