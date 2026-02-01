@@ -1,0 +1,14 @@
+[package]
+name = "proclamation"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+proc-macro2 = { version = "1.0.106" }
+quote = { version = "1.0.44", optional = true }
+syn = { version = "2.0.114", features = ["full"], optional = true }
+
+[features]
+default = ["syn", "quote"]
+quote = ["dep:quote"]
+syn = ["dep:syn"]
